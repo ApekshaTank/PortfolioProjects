@@ -1,10 +1,9 @@
--- =====================================================
+
 -- COVID-19 DATA ANALYSIS PROJECT
 -- Database: ProtfolioProject
--- =====================================================
+
 
 -- Step 1: Create and Use Database
--- =====================================================
 CREATE DATABASE ProtfolioProject;
 USE ProtfolioProject;
 
@@ -12,9 +11,9 @@ USE ProtfolioProject;
 SET GLOBAL local_infile = 1;
 SHOW VARIABLES LIKE 'local_infile';
 
--- =====================================================
+-- 
 -- Step 2: Create Tables
--- =====================================================
+-- 
 
 -- Create CovidDeaths table with ALL columns allowing NULL
 CREATE TABLE IF NOT EXISTS covid_deaths (
