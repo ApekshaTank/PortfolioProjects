@@ -1,10 +1,9 @@
--- =====================================================
 -- NASHVILLE HOUSING DATA ANALYSIS PROJECT
 -- Database: NashvilleHousing
--- =====================================================
+
 
 -- Step 1: Create and Use Database
--- =====================================================
+-- 
 CREATE DATABASE Nashville_Housing;
 USE Nashville_Housing;
 
@@ -12,9 +11,9 @@ USE Nashville_Housing;
 SET GLOBAL local_infile = 1;
 SHOW VARIABLES LIKE 'local_infile';
 
--- =====================================================
+-- 
 -- Step 2: Create Table with ALL columns allowing NULL
--- =====================================================
+--
 
 CREATE TABLE IF NOT EXISTS nashville_housing (
     UniqueID INT NULL,
@@ -38,48 +37,15 @@ CREATE TABLE IF NOT EXISTS nashville_housing (
     HalfBath INT NULL
 );
 
--- =====================================================
+-- 
 -- Step 3: Load Data from CSV File
--- =====================================================
+-- 
 
--- Data loading for Nashville Housing data
--- Converts empty strings to NULL and handles missing values
-LOAD DATA LOCAL INFILE 'C:/Users/Apeksha Tank/Desktop/Resume-Project/NashvilleHousing.csv'
-INTO TABLE nashville_housing
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(UniqueID, ParcelID, LandUse, PropertyAddress, @SaleDate, SalePrice, 
- LegalReference, SoldAsVacant, OwnerName, OwnerAddress, @Acreage, 
- TaxDistrict, LandValue, BuildingValue, TotalValue, @YearBuilt, 
- Bedrooms, FullBath, HalfBath)
-SET 
-    SaleDate = STR_TO_DATE(@SaleDate, '%Y-%m-%d'),
-    Acreage = NULLIF(@Acreage, ''),
-    YearBuilt = NULLIF(@YearBuilt, ''),
-    -- Handle empty strings for integer fields
-    UniqueID = NULLIF(UniqueID, ''),
-    SalePrice = NULLIF(SalePrice, ''),
-    LandValue = NULLIF(LandValue, ''),
-    BuildingValue = NULLIF(BuildingValue, ''),
-    TotalValue = NULLIF(TotalValue, ''),
-    Bedrooms = NULLIF(Bedrooms, ''),
-    FullBath = NULLIF(FullBath, ''),
-    HalfBath = NULLIF(HalfBath, ''),
-    -- Handle empty strings for text fields (set to NULL)
-    ParcelID = NULLIF(ParcelID, ''),
-    LandUse = NULLIF(LandUse, ''),
-    PropertyAddress = NULLIF(PropertyAddress, ''),
-    LegalReference = NULLIF(LegalReference, ''),
-    SoldAsVacant = NULLIF(SoldAsVacant, ''),
-    OwnerName = NULLIF(OwnerName, ''),
-    OwnerAddress = NULLIF(OwnerAddress, ''),
-    TaxDistrict = NULLIF(TaxDistrict, '');
+-- (DATA IS LOADED YOU -- TABLE DATA IMPORT WIZARD)
 
--- =====================================================
+-- 
 -- Step 4: Verify Data Import
--- =====================================================
+-- 
 
 -- Check total row count
 SELECT COUNT(*) AS total_records FROM nashville_housing;
@@ -277,4 +243,4 @@ DROP COLUMN OwnerAddress,
 DROP COLUMN TaxDistrict;
 
 ALTER TABLE nashville_housing
-DROP COLUMN SaleDateConverted;    -- WE ALREADY HAS THE CORRECT FORMAT IN THE OG TABLE.
+DROP COLUMN SaleDateConverted;    -- WE ALREADY HAVE THE CORRECT FORMAT IN THE OG TABLE.
